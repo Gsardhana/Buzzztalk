@@ -1,5 +1,5 @@
 pipeline{
-	agent 'any'
+	agent 'master'
 	tools{
 		maven 'M3'
 		jdk 'JAVA_HOME'
