@@ -1,20 +1,29 @@
 pipeline{
-agent any
-
-		stages {
-			stage('Verify Branch'){
+	agent 'any'
+	tools{
+		maven 'M3'
+		jdk 'JAVA_HOME'
+	}
+	stages {
+		stage('Checkout'){
 			steps{
-			echo "@GIT_BRANCH"
-			
+				git branch: 'master', url: 'https://github.com/Gsardhana/Buzzztalk.git'
 			}
+		}
+		stage('Build'){
+			steps{
+				bat 'mvn compile'
 			}
-		
-            			stage('Hello'){
-            			steps{
-            			echo "Hello world....!!!"
-
-            			}
-
-		                }
-	                }
+		}
+		stage('Package'){
+			steps{
+				bat 'mvn package'
+			}
+		}
+		stage('Deploy'){
+			steps{
+				bat 'java -jar C:/ProgramData/Jenkins/.jenkins/workspace/Buzztalk/target/Buzztalk-0.0.1-SNAPSHOT.jar'
+			}
+		}
+	}
 }
